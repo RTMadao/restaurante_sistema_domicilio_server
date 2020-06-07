@@ -8,6 +8,15 @@ class MenuController{
         res.json({mensaje: 'guardado exitosamente', respuesta: respuesta})
     }
 
+    guardarConjunto(req, res){
+        req.body.forEach( async (element,i,array) => {
+            const menu = new Menu(element)
+            const respuesta = await menu.save();
+            if(i == array.length -1) res.json({mensaje: 'guardado exitosamente'})
+        });
+        
+    }
+
     async listar(req, res){
         const listamenus = await Menu.find()
         res.json({lista: listamenus})

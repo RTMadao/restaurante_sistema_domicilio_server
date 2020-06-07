@@ -8,6 +8,15 @@ class DomicilioController{
         res.json({mensaje: 'guardado exitosamente', respuesta: respuesta})
     }
 
+    guardarConjunto(req, res){
+        req.body.forEach( async (element,i,array) => {
+            const domicilio = new Domicilio(element)
+            const respuesta = await domicilio.save();
+            if(i == array.length -1) res.json({mensaje: 'guardado exitosamente'})
+        });
+        
+    }
+
     async listar(req, res){
         const listaDomicilios = await Domicilio.find()
         res.json({lista: listaDomicilios})
