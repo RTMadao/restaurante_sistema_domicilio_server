@@ -15,8 +15,6 @@ class PedidoController{
 
     async modificar(req, res){
         const update = await Pedido.updateOne({'_id': req.body._id}, req.body)
-        console.log(update);
-        
         res.json({respuesta: update})
     }
 
@@ -33,8 +31,6 @@ class PedidoController{
 
     async listarPendientes(req, res){
         const listaPedidos = await Pedido.find({'pedido.pendiente': true})
-        console.log(listaPedidos);
-        
         res.json({lista: listaPedidos})
     }
  
