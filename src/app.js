@@ -11,7 +11,7 @@ const domicilioRoutes = require('./routes/domicilio.router');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost/rico_mondongo', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb+srv://Carlos:BelloH@cluster0-pkf7z.mongodb.net/rico_mondongo?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true})
 .then(db => console.log('conectado correctamente a la base de datos'))
 .catch(err => console.log('error al conectar base de datos '+err))
 
