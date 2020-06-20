@@ -1,4 +1,4 @@
-const Reporte = require('../model/ReporteDiario')
+const ReporteDia = require('../model/ReporteDiario')
 const Menu = require('../model/Menu')
 const Pedido = require('../model/Pedido')
 const DetalleReporteController = require('./detalleReporte.controller')
@@ -8,24 +8,18 @@ class ReporteController{
 
     async generar(req, res){
         
-        const fechaActual = `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`
-        
-        const pedido = await Pedido.find({},'pedido')
-        var reporte = await ReporteController.getItemsReporte(pedido)
-        
-        reporte.fecha = fechaActual
+        const pedidos = await Pedido.find({},'pedido')
+        var infoReporte = await ReporteController.getItemsReporte(pedidos)
 
-        res.json({reporte: reporte})
+        const reporte = new ReporteDia(infoReporte)
+        reporte.save()
+
+        res.json({lista: reporte})
     }
 
     async listar(req, res){
-        const listaReportes = await Reporte.find()
+        const listaReportes = await ReporteDia.find()
         res.json({Reportes: listaReportes})
-    }
-
-    async modificar(req, res){
-        const update = await Reporte.updateOne({'_id': req.body.id}, req.body)
-        res.json({respuesta: update})
     }
 
     async eliminar(req, res){
@@ -42,9 +36,13 @@ class ReporteController{
                 })
                 domicilio += pedido.pedido.valorDomicilio
                 total += pedido.pedido.total
-                if(i == array.length -1) resolve({items: items.getItems(), valorDomicilio: domicilio, total: total})
+                if(i == array.length -1) resolve({platosVendidos: items.getItems(), totalDomicilio: domicilio, totalVendido: total})
             })
         })
+    }
+
+    getUltimoConsecutivo(){
+        return null
     }
 
 }

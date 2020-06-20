@@ -23,12 +23,13 @@ class DomicilioController{
     }
 
     async modificar(req, res){
-        const update = await Domicilio.updateOne({'_id': req.body.id}, req.body)
+        const update = await Domicilio.updateOne({'_id': req.body._id}, req.body)
         res.json({respuesta: update})
     }
 
     async eliminar(req, res){
-        const delet = await Domicilio.remove({'_id': req.body.id})
+        const {id} = req.params
+        const delet = await Domicilio.remove({'_id': id})
         res.json({respuesta: delet})
     }
 

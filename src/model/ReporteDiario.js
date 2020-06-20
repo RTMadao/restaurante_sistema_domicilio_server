@@ -6,7 +6,7 @@ const ReporteDia = new Schema({
     platosVendidos:[
         {
             nombre: String,
-            total: Number,
+            valor: Number,
             cantidad: Number
         }
     ],

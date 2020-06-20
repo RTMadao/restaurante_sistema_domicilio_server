@@ -4,8 +4,13 @@ class PedidoController{
 
     async guardar(req, res){
         const pedido = new Pedido(req.body)
-        const respuesta = await pedido.save();
-        res.json({mensaje: 'guardado exitosamente', respuesta: respuesta})
+        try {
+            await pedido.setConsecutivo()
+            const respuesta = await pedido.save()
+            res.json({mensaje: respuesta})
+        } catch (error) {
+            res.json(error)
+        }
     }
 
     async listar(req, res){
@@ -18,26 +23,19 @@ class PedidoController{
         res.json({respuesta: update})
     }
 
-    async eliminar(req, res){
-        const delet = await Pedido.remove({'_id': req.body.id})
+    async eliminarPorID(req, res){
+        const {id} = req.params
+        const delet = await Pedido.deleteOne({'_id': id})
         res.json({respuesta: delet})
     }
 
-    listarToReporte(){
-        return new Promise (async (resolve, reject) => {
-            resolve(await Pedido.find())
-        })
+    async eliminar(req, res){
+        const delet = await Pedido.deleteMany({},(err) => {console.log(err);})
+        res.json({respuesta: delet})
     }
 
-    async listarPendientes(req, res){
-        const listaPedidos = await Pedido.find({'pedido.pendiente': true})
-        res.json({lista: listaPedidos})
-    }
- 
-    eliminar(){
-        return new Promise (async (resolve, reject) => {
-            resolve(await Pedido.remove({},(err) => {console.log(err);}))
-        })
+    async setPedidos(){
+        socketController.sendPedido(await Pedido.find())
     }
 
 }

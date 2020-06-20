@@ -8,6 +8,10 @@ const pedidoRoutes = require('./routes/pedido.routes');
 const menuRoutes = require('./routes/menu.routes');
 const reporteRoutes = require('./routes/reporte.routes');
 const domicilioRoutes = require('./routes/domicilio.router');
+const configuracionRoutes = require('./routes/configuracion.routes');
+
+//websocket
+//const socketController = require('./socket');
 
 const app = express();
 
@@ -29,8 +33,12 @@ app.use('/pedido',pedidoRoutes)
 app.use('/menu',menuRoutes)
 app.use('/reporte',reporteRoutes)
 app.use('/domicilio',domicilioRoutes)
+app.use('/configuracion',configuracionRoutes)
 
 //start server
-app.listen(app.get('port'),() => {
-    console.log(`server on port  ${app.get('port')}`)
+const server = app.listen(app.get('port'),() => {
+    console.log('server on port',app.get('port'))
 })
+
+//start websocket
+//socketController.start(server)

@@ -6,6 +6,6 @@ router.get('/',controller.listar)
 router.post('/',controller.guardar)
 router.post('/conjunto',controller.guardarConjunto)
 router.put('/',controller.modificar)
-router.delete('/',controller.eliminar)
+router.delete('/:id',controller.eliminar)
 
 module.exports = router;
