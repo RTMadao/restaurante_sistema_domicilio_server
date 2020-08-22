@@ -3,6 +3,7 @@ const Pedido = require('../model/Pedido')
 class PedidoController{
 
     async guardar(req, res){
+        console.log('hola');
         const pedido = new Pedido(req.body)
         try {
             await pedido.setConsecutivo()
@@ -31,6 +32,7 @@ class PedidoController{
 
     async eliminar(req, res){
         const delet = await Pedido.deleteMany({},(err) => {console.log(err);})
+        console.log(delet);
         res.json({respuesta: delet})
     }
 
