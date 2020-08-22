@@ -11,7 +11,7 @@ const domicilioRoutes = require('./routes/domicilio.router');
 const configuracionRoutes = require('./routes/configuracion.routes');
 
 //websocket
-//const socketController = require('./socket');
+const socketController = require('./socket');
 
 const app = express();
 
@@ -41,4 +41,4 @@ const server = app.listen(app.get('port'),() => {
 })
 
 //start websocket
-//socketController.start(server)
+socketController.start(server)
