@@ -10,13 +10,19 @@ class ReporteController{
     async generar(dbname: string){
         return new Promise(async (resolve, reject) => {
             try {
-                const pedidos = await pedidoController.listar(dbname)
+                const pedidos : any = await pedidoController.listar(dbname)
                 const db = DBController.getInstance().getConnection(dbname)
                 if (db != undefined) {
                     var reporte = new db.reporteDiarioModel()
-                    reporte.addItem({nombre: 'sopa', total: 20000, cantidad: 2})
-                    reporte.addItem({nombre: 'sopa', total: 10000, cantidad: 1})
-                    reporte.addItem({nombre: 'sancocho', total: 15000, cantidad: 1})
+
+                    pedidos.forEach((pedido : any) => {
+                        pedido.pedido.platos.forEach((platoVendido: any) => {
+                            reporte.addItem(platoVendido)
+                        });
+                        reporte.addDescuento(pedido.pedido.descuento)
+                        reporte.addValorDomicilio(pedido.pedido.valorDomicilio)
+                    });
+                    reporte.setTotalVentas()
                     resolve(reporte)
                 }
             } catch (error) {

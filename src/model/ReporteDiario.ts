@@ -34,3 +34,17 @@ ReporteDiario.methods.addItem = function (platoVenta: {nombre:string, total:numb
     
 }
 
+ReporteDiario.methods.addValorDomicilio = function (valorDomicilio: number){
+    if(this.totalDomicilio == undefined) this.totalDomicilio = valorDomicilio
+    else this.totalDomicilio += valorDomicilio
+}
+
+ReporteDiario.methods.addDescuento = function (descuento: number){
+    if(this.descuentos == undefined) this.descuentos = descuento
+    else this.descuentos += descuento
+}
+
+ReporteDiario.methods.setTotalVentas = function (){
+    this.totalVendido = this.subtotalVenta - this.descuentos
+}
+
