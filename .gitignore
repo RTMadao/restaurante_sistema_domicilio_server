@@ -1,5 +1,4 @@
 #keys 
-src/DB/key.ts
 dist/DB/key.js
 
 # archivos mongo DB
